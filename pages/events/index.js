@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 
-import { getAllEvents } from "../../halpers/api-util";
+import { getAllEvents } from "../../helpers/api-util";
 import EventList from "../../components/events/event-list";
 import EventsSearch from "../../components/events/events-search";
 import { useRouter } from "next/router";
@@ -30,6 +30,7 @@ export async function getStaticProps() {
     props: {
       events,
     },
+    revalidate: 60,
   };
 }
 

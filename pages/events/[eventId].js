@@ -1,19 +1,18 @@
 import { Fragment } from "react";
 
-import { getEventById, getAllEvents } from "../../halpers/api-util";
+import { getEventById, getAllEvents } from "../../helpers/api-util";
 import EventSummary from "../../components/event-detail/event-summary";
 import EventLogistics from "../../components/event-detail/event-logistics";
 import EventContent from "../../components/event-detail/event-content";
-import ErrorAlert from "../../components/ui/error-alert";
 
 function EventDetailPage(props) {
   const event = props.selectedEvent;
 
   if (!event) {
     return (
-      <ErrorAlert>
-        <p>No event found!</p>
-      </ErrorAlert>
+      <div className="center">
+        <p>Loading...</p>
+      </div>
     );
   }
 
@@ -40,8 +39,9 @@ export async function getStaticProps(context) {
 
   return {
     props: {
-      selectedEvent: event,
+      selectedEvent: event || null,
     },
+    revalidate: 30,
   };
 }
 
@@ -52,7 +52,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: false,
+    fallback: "blocking",
   };
 }
 
